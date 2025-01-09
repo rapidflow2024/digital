@@ -1,0 +1,154 @@
+fdb75b1ef2023
+
+sql_loginapi_rap
+
+mysql -u sql_loginapi_rap -p
+
+
+
+ Database           |
++--------------------+
+| information_schema |
+| sql_loginapi_rap 
+
+
+
+'-------------------------------------
+
+DATABASE_HOST=localhost
+DATABASE_USER=ssql_login_rapidf
+DATABASE_PASSWORD=2484dee368ead
+DATABASE_NAME=sql_login_rapidf
+'--------------------------------
+
+#!/bin/bash
+
+# Script de Verificação do Sistema
+
+# Variáveis de Ambiente
+MYSQL_HOST="localhost"
+MYSQL_USER="sql_loginapi_rap"
+MYSQL_PASSWORD="fdb75b1ef2023"
+MYSQL_DATABASE="sql_loginapi_rap"
+FRONTEND_URL="http://login.rapidflow.com.br"
+PORTA=3100
+
+# Função de Verificação do Banco de Dados
+function verificar_banco() {
+  echo "Verificando conexão com o banco de dados MySQL..."
+  mysql -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD -e "USE $MYSQL_DATABASE;" > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "Conexão com o banco de dados estabelecida."
+  else
+    echo "Falha na conexão com o banco de dados."
+    exit 1
+  fi
+}
+
+# Função de Verificação do Frontend
+function verificar_frontend() {
+  echo "Verificando se o frontend está acessível..."
+  HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $FRONTEND_URL)
+  if [ $HTTP_CODE -eq 200 ]; then
+    echo "Frontend está acessível."
+  else
+    echo "Frontend não está acessível. Código HTTP: $HTTP_CODE"
+    exit 1
+  fi
+}
+
+# Função de Verificação das Portas
+function verificar_porta() {
+  echo "Verificando se a porta $PORTA está aberta..."
+  (echo > /dev/tcp/localhost/$PORTA) > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "Porta $PORTA está aberta."
+  else
+    echo "Porta $PORTA está fechada."
+    exit 1
+  fi
+}
+
+# Executando as Verificações
+verificar_banco
+verificar_frontend
+verificar_porta
+
+echo "Verificação concluída com sucesso."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'-------------------------------------------------------------------
+
+# Função de Verificação do Banco de Dados
+function verificar_banco() {
+  echo "Verificando conexão com o banco de dados MySQL..."
+  mysql -h$MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD -e "USE $MYSQL_DATABASE;" > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "Conexão com o banco de dados estabelecida."
+  else
+    echo "Falha na conexão com o banco de dados."
+    exit 1
+  fi
+}
+
+# Função de Verificação do Frontend
+function verificar_frontend() {
+  echo "Verificando se o frontend está acessível..."
+  curl -s -o /dev/null -w "%{http_code}" $FRONTEND_URL
+  if [ $? -eq 0 ]; then
+    echo "Frontend está acessível."
+  else
+    echo "Frontend não está acessível."
+    exit 1
+  fi
+}
+
+# Função de Verificação das Portas
+function verificar_porta() {
+  echo "Verificando se a porta $PORTA está aberta..."
+  (echo > /dev/tcp/localhost/$PORTA) > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "Porta $PORTA está aberta."
+  else
+    echo "Porta $PORTA está fechada."
+    exit 1
+  fi
+}
+
+# Executando as Verificações
+verificar_banco
+verificar_frontend
+verificar_porta
+
+echo "Verificação concluída com sucesso."
+
+
+
+
+na pasta: nano verificar.sh
+permissão chmod +x verificar.sh
+executar ./verificar.sh
